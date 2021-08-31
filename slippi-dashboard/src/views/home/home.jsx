@@ -1,4 +1,5 @@
 import './home.css';
+import UploadFiles from "../../components/uploadFiles/uploadFiles";
 
 const Home = ({files, addFile}) => {
     return (
@@ -8,6 +9,7 @@ const Home = ({files, addFile}) => {
                     Welcome to the Slippi Dashboard
                 </div>
             </header>
+            <UploadFiles></UploadFiles>
         </div>
     );
 }

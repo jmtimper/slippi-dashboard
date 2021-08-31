@@ -12,7 +12,7 @@ const UploadFiles = ({addFile}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        addFile(selectedFiles);
+        // addFile(selectedFiles);
     }
 
     return (

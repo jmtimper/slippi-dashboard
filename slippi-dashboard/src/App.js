@@ -14,7 +14,7 @@ const App = () => {
                 <div className="content-wrapper">
                     <Route exact path="/" render={() => (<Home files={files}/>)}/>
                     <Route path="/home" render={() => (<Home files={files}/>)}/>
-                    <Route path="/seeding" component={Metrics}/>
+                    <Route path="/metrics" component={Metrics}/>
                 </div>
             </Router>
         </div>
