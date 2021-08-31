@@ -5,7 +5,7 @@ const Home = ({files, addFile}) => {
         <div className="Home center-text">
             <header className="home-header">
                 <div className="large-bold-header">
-                    Welcome to Smash.gg Dashboard
+                    Welcome to the Slippi Dashboard
                 </div>
             </header>
         </div>
