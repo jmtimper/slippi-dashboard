@@ -1,9 +1,9 @@
 import './metrics.css';
 import {Button} from "react-bootstrap";
 
-function Metrics() {
+function Seeding() {
     return (
-        <div className="Metrics">
+        <div className="seeding">
             <div>
                 test
             </div>
@@ -11,4 +11,4 @@ function Metrics() {
     );
 }
 
-export default Metrics;
+export default Seeding;
