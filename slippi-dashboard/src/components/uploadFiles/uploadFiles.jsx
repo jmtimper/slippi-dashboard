@@ -1,44 +1,46 @@
 import './uploadFiles.css';
 import {Button} from "react-bootstrap";
 import {useState} from "react";
+import axios from "axios";
 
 const UploadFiles = ({addFile}) => {
     const [selectedFiles, setSelectedFiles] = useState([])
 
-    const handleChange = (event ) => {
+    const handleChange = (event) => {
         setSelectedFiles(event.target.value);
         console.log(event.target.files)
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // addFile(selectedFiles);
+        const formData = new FormData();
+        formData.append('file', selectedFiles);
+
+        try {
+            const res = await axios.post('/upload', formData, {
+                    // headers: {
+                    //     'Content-Type': 'multipart/form-data'
+                    // },
+                    // onUploadProgress: progressEvent => {
+                    //     setUploadPercentage(
+                    //         parseInt(
+                    //             Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                    //         )
+                    //     );
+                    // }
+                }
+            )
+        } catch (e) {}
     }
 
     return (
         <form onSubmit={handleSubmit}>
             <label>
                 Name:
-                <input type="file" multiple={true} value={selectedFiles} onChange={handleChange} />
+                <input type="file" multiple={true} value={selectedFiles} onChange={handleChange}/>
             </label>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit"/>
         </form>
-        // <div>
-        //     <div className="mt-50">
-        //         <div>
-        //             <input type="file" multiple="multiple" onChange={updateFiles}/>
-        //         </div>
-        //     </div>
-        //     <div className="mt-50">
-        //         <Button variant="primary"
-        //                 size="lg"
-        //                 active
-        //                 type='file'
-        //                 onClick={updateFiles}>
-        //             Process selected files
-        //         </Button>{' '}
-        //     </div>
-        // </div>
     );
 }
 
