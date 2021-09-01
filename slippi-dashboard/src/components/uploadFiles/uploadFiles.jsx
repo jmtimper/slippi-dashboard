@@ -3,6 +3,7 @@ import {Button} from "react-bootstrap";
 import {Fragment, useState} from "react";
 import axios from "axios";
 import Progress from "../progress/progress";
+import {SlippiGame, SlpFile} from "@slippi/slippi-js";
 
 const UploadFiles = () => {
     const [file, setFile] = useState('')
@@ -43,9 +44,25 @@ const UploadFiles = () => {
 
             const { fileName, filePath } = res.data;
 
-            console.log(fileName)
+            console.log(fileName, filePath)
 
             setUploadedFile({ fileName, filePath });
+
+            const reader = new FileReader();
+            const slpFile = new File('Game_20210718T004619.slp')
+            // reader.readAsArrayBuffer(new File('Game_20210718T004619.slp'));
+            // reader.onload = () => {
+            //     if (reader.result) {
+            //         const game = new SlippiGame(Buffer.from(reader.result));
+            //         console.log(game)
+            //     }
+            // };
+
+            const file = '../../../public' + filePath;
+            // const game = new SlippiGame('Game_20210718T004619.slp');
+            //
+            // // const settings = game.getSettings();
+            // console.log(file, game, game.getSettings());
 
             setMessage(`File ${fileName} uploaded!`)
         } catch (e) {
