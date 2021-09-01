@@ -1,46 +1,78 @@
 import './uploadFiles.css';
 import {Button} from "react-bootstrap";
-import {useState} from "react";
+import {Fragment, useState} from "react";
 import axios from "axios";
+import Progress from "../progress/progress";
 
-const UploadFiles = ({addFile}) => {
-    const [selectedFiles, setSelectedFiles] = useState([])
+const UploadFiles = () => {
+    const [file, setFile] = useState('')
+    const [filename, setFilename] = useState('Choose File')
+    const [uploadPercentage, setUploadPercentage] = useState(0);
+    const [uploadedFile, setUploadedFile] = useState({});
+    const [message, setMessage] = useState('');
 
     const handleChange = (event) => {
-        setSelectedFiles(event.target.value);
-        console.log(event.target.files)
+        setFile(event.target.files[0]);
+        setFilename(event.target.files[0].name)
+        // console.log(event.target.files[0], file, filename)
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append('file', selectedFiles);
+        formData.append('file', file);
+        console.log(formData)
 
         try {
             const res = await axios.post('/upload', formData, {
-                    // headers: {
-                    //     'Content-Type': 'multipart/form-data'
-                    // },
-                    // onUploadProgress: progressEvent => {
-                    //     setUploadPercentage(
-                    //         parseInt(
-                    //             Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                    //         )
-                    //     );
-                    // }
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: progressEvent => {
+                        setUploadPercentage(
+                            parseInt(
+                                Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                            )
+                        );
+                    }
                 }
             )
-        } catch (e) {}
+
+            // Clear percentage
+            setTimeout(() => setUploadPercentage(0), 10000);
+
+            const { fileName, filePath } = res.data;
+
+            console.log(fileName)
+
+            setUploadedFile({ fileName, filePath });
+
+            setMessage(`File ${fileName} uploaded!`)
+        } catch (e) {
+            if (e.response.status === 500) {
+                setMessage('There was a problem with the server');
+            } else {
+                setMessage(e.response.data.msg);
+            }
+            setUploadPercentage(0)
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Name:
-                <input type="file" multiple={true} value={selectedFiles} onChange={handleChange}/>
-            </label>
-            <input type="submit" value="Submit"/>
-        </form>
+        <Fragment>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Name:
+                    <input type="file" multiple={true} onChange={handleChange}/>
+                </label>
+                <input type="submit" value="Submit"/>
+
+                <Progress percentage={uploadPercentage} />
+            </form>
+            <div>
+                {message}
+            </div>
+        </Fragment>
     );
 }
 

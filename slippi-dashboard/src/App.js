@@ -5,15 +5,14 @@ import {Route, BrowserRouter as Router} from "react-router-dom";
 import Metrics from "./views/metrics/metrics";
 
 const App = () => {
-    const [files, setFiles] = useState(['test'])
 
     return (
         <div>
             <Header/>
             <Router>
                 <div className="content-wrapper">
-                    <Route exact path="/" render={() => (<Home files={files}/>)}/>
-                    <Route path="/home" render={() => (<Home files={files}/>)}/>
+                    <Route exact path="/" render={() => (<Home/>)}/>
+                    <Route path="/home" render={() => (<Home/>)}/>
                     <Route path="/metrics" component={Metrics}/>
                 </div>
             </Router>

@@ -1,7 +1,7 @@
 import './home.css';
 import UploadFiles from "../../components/uploadFiles/uploadFiles";
 
-const Home = ({files, addFile}) => {
+const Home = () => {
     return (
         <div className="Home center-text">
             <header className="home-header">

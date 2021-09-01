@@ -8,6 +8,7 @@ app.use(fileUpload());
 // Upload Endpoint
 app.post('/upload', (req, res) => {
     if (req.files === null) {
+        console.log(req)
         return res.status(400).json({ msg: 'No file uploaded' });
     }
 
