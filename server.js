@@ -1,5 +1,7 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const fs = require('fs');
+const { SlippiGame } = require("@slippi/slippi-js");
 
 const app = express();
 
@@ -23,5 +25,29 @@ app.post('/upload', (req, res) => {
         res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
     });
 });
+
+// Upload Endpoint
+app.get('/fetch/files', (req, res) => {
+    fs.readdir(`${__dirname}/slippi-dashboard/public/uploads/`, (e, files) => {files.forEach(file => {
+        console.log(file)
+        const game = new SlippiGame(`${__dirname}/slippi-dashboard/public/uploads/` + file);
+
+// Get game settings – stage, characters, etc
+        const settings = game.getSettings();
+        console.log(settings);
+
+// Get metadata - start time, platform played on, etc
+        const metadata = game.getMetadata();
+        console.log(metadata);
+
+// Get computed stats - openings / kill, conversions, etc
+        const stats = game.getStats();
+        console.log(stats);
+    })})
+    res.send(
+        200
+    )
+});
+
 
 app.listen(5000, () => console.log('Server Started...'));
