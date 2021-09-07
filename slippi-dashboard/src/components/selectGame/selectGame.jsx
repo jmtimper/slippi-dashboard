@@ -1,14 +1,11 @@
-import './uploadFiles.css';
+import './selectGame.css';
 import {Fragment, useState} from "react";
 import axios from "axios";
-import Progress from "../progress/progress";
 import {Form} from "react-bootstrap";
-import {Button} from "bootstrap";
-
 
 const replayFolder = '../../../public/uploads/';
 
-const UploadFiles = () => {
+const SelectGame = () => {
     const [file, setFile] = useState('')
     const [filename, setFilename] = useState('Choose File')
     const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -18,7 +15,9 @@ const UploadFiles = () => {
     const handleChange = (event) => {
         setFile(event.target.files[0]);
         setFilename(event.target.files[0].name)
+        // console.log(event.target.files[0], file, filename)
     }
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -46,10 +45,42 @@ const UploadFiles = () => {
 
             const {fileName, filePath} = res.data;
 
+            console.log(fileName, filePath)
+
             setUploadedFile({fileName, filePath});
+
+            const files = [];
+
+            console.log(replayFolder)
+            // fs.readdirSync(replayFolder).forEach(file => {
+            //     console.log(file)
+            //     files.push(file);
+            // });
+
+            // console.log(fs.readFile('./Game_20210718T004619.slp'))
+
+            console.log(files)
+
+            // const reader = new FileReader();
+            // const slpFile = new File('Game_20210718T004619.slp')
+
+            // reader.readAsArrayBuffer(new File('Game_20210718T004619.slp'));
+            // reader.onload = () => {
+            //     if (reader.result) {
+            //         const game = new SlippiGame(Buffer.from(reader.result));
+            //         console.log(game)
+            //     }
+            // };
+
+            // const file = '../../../public' + filePath;
+            // const game = new SlippiGame('./Game_20210718T004619.slp');
+            // //
+            // // const settings = game.getSettings();
+            // console.log(file, game, game.getSettings());
 
             setMessage(`File ${fileName} uploaded!`)
         } catch (e) {
+            console.log(e)
             if (e.response.status === 500) {
                 setMessage('There was a problem with the server');
             } else {
@@ -61,23 +92,14 @@ const UploadFiles = () => {
 
     return (
         <Fragment>
-            <Form>
-                <Form.Group controlId="formFileMultiple" className="mb-3" onSubmit={handleSubmit}>
-                    <Form.Label>Multiple files input example</Form.Label>
-                    <Form.Control type="file" multiple onChange={handleChange}/>
-                </Form.Group>
-                <Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form.Group>
-            </Form>
-            <Progress percentage={uploadPercentage}/>
-            <div>
-                {message}
-            </div>
+            <Form.Select>
+                <option>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </Form.Select>
         </Fragment>
     );
 }
 
-export default UploadFiles;
+export default SelectGame;

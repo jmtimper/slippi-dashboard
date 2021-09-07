@@ -1,12 +1,11 @@
 import './metrics.css';
-import {Button} from "react-bootstrap";
+import SelectGame from "../../components/selectGame/selectGame";
 
 function Metrics() {
     return (
         <div className="seeding">
-            <div>
-                test
-            </div>
+            <div>Metrics</div>
+            <SelectGame></SelectGame>
         </div>
     );
 }
