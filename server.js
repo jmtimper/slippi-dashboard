@@ -53,24 +53,15 @@ app.get('/fetch/files/all', (req, res) => {
 
 // Fetch single game file if exists
 app.get('/fetch/files/specific', (req, res) => {
-    console.log('body', req.query.file)
     const filename = req.query.file
     const game = new SlippiGame(`${__dirname}/slippi-dashboard/public/uploads/` + filename + '.slp');
 
-// Get game settings – stage, characters, etc
-    const settings = game.getSettings();
-    console.log(settings);
-
-// Get metadata - start time, platform played on, etc
-    const metadata = game.getMetadata();
-    console.log(metadata);
-
-// Get computed stats - openings / kill, conversions, etc
-    const stats = game.getStats();
-    console.log(stats);
-    res.sendStatus(
+    res.status(
         200
-    )
+    ).json({
+        settings: game.getSettings(),
+        stats: game.getStats().overall
+    })
 });
 
 app.listen(5000, () => console.log('Server Started...'));
