@@ -64,4 +64,20 @@ app.get('/fetch/files/specific', (req, res) => {
     })
 });
 
+// Fetch single game file if exists
+app.get('/fetch/files/names', (req, res) => {
+    const replayFolder = './slippi-dashboard/public/uploads/';
+
+    const games = [];
+
+    fs.readdirSync(replayFolder).forEach(file => {
+        games.push(file.split('.')[0])
+    });
+    res.status(
+        200
+    ).json({
+        games: games
+    })
+});
+
 app.listen(5000, () => console.log('Server Started...'));

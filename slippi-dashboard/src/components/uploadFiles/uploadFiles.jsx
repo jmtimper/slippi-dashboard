@@ -61,17 +61,13 @@ const UploadFiles = () => {
 
     return (
         <Fragment>
-            <Form>
-                <Form.Group controlId="formFileMultiple" className="mb-3" onSubmit={handleSubmit}>
-                    <Form.Label>Multiple files input example</Form.Label>
-                    <Form.Control type="file" multiple onChange={handleChange}/>
-                </Form.Group>
-                <Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form.Group>
-            </Form>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Name:
+                    <input type="file" multiple={true} onChange={handleChange}/>
+                </label>
+                <input type="submit" value="Submit"/>
+            </form>
             <Progress percentage={uploadPercentage}/>
             <div>
                 {message}
